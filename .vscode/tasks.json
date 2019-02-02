@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/AirTicketSearcher.csproj"
+                "${workspaceFolder}/AirTicketSearcher/AirTicketSearcher.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

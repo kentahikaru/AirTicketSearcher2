@@ -11,8 +11,8 @@ namespace AirTicketSearcher.Configuration
         {
             Config config = new Config();
 
+            string test = ConfigurationManager.AppSettings["test1"];
             
-
             return config;
         }
     }
