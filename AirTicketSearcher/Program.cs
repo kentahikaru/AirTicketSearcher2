@@ -28,6 +28,7 @@ namespace AirTicketSearcher
                 Console.WriteLine("Hello World!");
                 logger.Debug("test");
                 logger.Info("testi");
+                logger.Fatal("test");
             }
             catch (Exception ex)
             {
