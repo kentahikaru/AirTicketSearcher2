@@ -8,7 +8,7 @@ namespace AirTicketSearcher.Kiwi
             this.config = config;
         }
 
-        public void Search()
+        public void Run()
         {
 
         }

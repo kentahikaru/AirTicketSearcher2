@@ -2,6 +2,6 @@ namespace AirTicketSearcher
 {
     public interface ISearch
     {
-         void Search();
+         void Run();
     }
 }

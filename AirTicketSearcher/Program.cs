@@ -25,13 +25,7 @@ namespace AirTicketSearcher
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
-                Console.WriteLine("Hello World!");
-                logger.Debug("test");
-                logger.Info("testi");
-                logger.Fatal("test");
-
-                Mail.Mail mail = new Mail.Mail();
-                mail.SendEmail("Text spravy bla bla bla");
+                Console.WriteLine("Stopping AirTicketSearcher program");
             }
             catch (Exception ex)
             {
@@ -62,7 +56,7 @@ namespace AirTicketSearcher
         {
             foreach (ISearch item in searchersList)
             {
-                item.Search();
+                item.Run();
             }
         }
     }
