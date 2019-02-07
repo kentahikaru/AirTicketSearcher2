@@ -1,4 +1,5 @@
 AirTicketSearcher/bin/
 AirTicketSearcher/obj/
 packages
-AirTicketSearcher/Configuration/NLogConfigManager.cs
+logs/
+AirTicketSearcher/logs

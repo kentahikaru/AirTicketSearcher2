@@ -29,6 +29,9 @@ namespace AirTicketSearcher
                 logger.Debug("test");
                 logger.Info("testi");
                 logger.Fatal("test");
+
+                Mail.Mail mail = new Mail.Mail();
+                mail.SendEmail("Text spravy bla bla bla");
             }
             catch (Exception ex)
             {
