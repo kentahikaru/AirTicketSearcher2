@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using AirTicketSearcher.Configuration;
 using AirTicketSearcher.Kiwi;
 using NLog;
@@ -25,6 +27,11 @@ namespace AirTicketSearcher
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
+
+                TransportLayer.Transport tr = new TransportLayer.Transport();
+                tr.GetDataFromWeb("neco");
+
+                Console.ReadLine();
                 Console.WriteLine("Stopping AirTicketSearcher program");
             }
             catch (Exception ex)
@@ -54,8 +61,12 @@ namespace AirTicketSearcher
 
         private static void Search(List<ISearch> searchersList)
         {
+            //List<Task> tasks = new List<Task>();
             foreach (ISearch item in searchersList)
             {
+                //Task task = item.Run();
+                //task.Wait();
+                //tasks.Add(task);
                 item.Run();
             }
         }
