@@ -3,3 +3,4 @@ AirTicketSearcher/obj/
 packages
 logs/
 AirTicketSearcher/logs
+AirTicketSearcher/Mail/mail.cs

@@ -13,7 +13,7 @@ namespace AirTicketSearcher.TransportLayer
         {
         }
 
-        public async  void GetDataFromWeb(string url)
+        public string GetDataFromWeb(string url)
         {
             
             // HttpClient client = new HttpClient();
@@ -29,11 +29,10 @@ namespace AirTicketSearcher.TransportLayer
 
             // WORKS ---------
             WebClient client = new WebClient();
-            string result = client.DownloadString(ADDRESS);
-            //result = result.Replace("\\\"","");
+            string result = client.DownloadString(url);
             Console.WriteLine(result);
 
-            
+            return result;
         }
 
     }

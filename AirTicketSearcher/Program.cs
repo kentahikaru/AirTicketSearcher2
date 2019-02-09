@@ -15,7 +15,7 @@ namespace AirTicketSearcher
 {
     class Program
     {
-        private static NLog.Logger logger;
+        public static NLog.Logger logger;
         static void Main(string[] args)
         {
             try
@@ -28,8 +28,7 @@ namespace AirTicketSearcher
                 Search(searchersList);
 
 
-                TransportLayer.Transport tr = new TransportLayer.Transport();
-                tr.GetDataFromWeb("neco");
+              
 
                 Console.ReadLine();
                 Console.WriteLine("Stopping AirTicketSearcher program");

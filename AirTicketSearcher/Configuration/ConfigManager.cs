@@ -11,41 +11,20 @@ namespace AirTicketSearcher.Configuration
 
         public Config LoadConfiguration()
         {
-            // Config config = new Config();
-
-            // string test = ConfigurationManager.AppSettings["test1"];
+            Config config = new Config();
             
-            
+            var kiwiSection = ConfigurationManager.GetSection("kiwiConfigParameters") as NameValueCollection;
+            config.kiwiConfig.baseUrl = kiwiSection["base_url"];
 
-
-
-
-var section = ConfigurationManager.GetSection("kiwi") as NameValueCollection;
-var value = section["key1"];
-
-
-            // System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            // ConfigurationSectionGroupCollection sectionGroups = config.SectionGroups;
-
-          
-            // if (sectionGroups["searchers"] != null)
-            // {
-            //     foreach (ConfigurationSection section in sectionGroups["searchers"].Sections)
-            //     {
-            //         NameValueCollection db = (NameValueCollection)ConfigurationSettings.GetConfig("searchers\\" + section.SectionInformation.Name);
-            //         ConfigurationSection secction = section;
-            //         foreach (var item1 in db.AllKeys)
-            //         {
-            //             Console.WriteLine("{0}----{1}",item1,db[item1]);
-            //         }
-            //     }
-            // }
-
-
+            kiwiSection = ConfigurationManager.GetSection("kiwiUrlParameters") as NameValueCollection;
+            foreach(string key in kiwiSection.AllKeys)
+            {
+                config.kiwiConfig.kiwiUrlParameters[key] = kiwiSection[key];
+            }
 
 
             
-            return new Config(); //config;
+            return config;
         }
     }
 }
