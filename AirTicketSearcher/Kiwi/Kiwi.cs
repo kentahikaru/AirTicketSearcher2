@@ -105,8 +105,8 @@ namespace AirTicketSearcher.Kiwi
                         
                     }
 
-                    tr.AddCell("Personal weight: " + data.baggage.personal_item.weight.ToString());
-                    tr.AddCell("Personal price: " + data.baggage.personal_item.price.ToString());
+                    tr.AddCell("Personal weight: " + data.baggage?.personal_item?.weight.ToString());
+                    tr.AddCell("Personal price: " + data.baggage?.personal_item?.price.ToString());
                     tr.AddCell("Hand weight: " + data.baggage.hand.weight.ToString());
                     tr.AddCell("Hand price: " + data.baggage.hand.price.ToString());
                     foreach(Hold hold in data.baggage.hold)

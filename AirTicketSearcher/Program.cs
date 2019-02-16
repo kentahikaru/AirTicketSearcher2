@@ -56,6 +56,16 @@ namespace AirTicketSearcher
                 Console.WriteLine("Error happened");
                 Console.WriteLine(ex.Message);
                 logger.Error(ex.Message);
+                
+                Exception innerException = ex.InnerException;
+
+                while (innerException != null)
+                {
+                    logger.Error("Inner Exception: " + Environment.NewLine + innerException.Message);
+                    logger.Error(innerException.StackTrace);
+                    innerException = innerException.InnerException;
+                }
+
                 Mail.Mail mail = new Mail.Mail(config.emailConfig);
                 mail.SendEmail("AirTicketSearcher - Japan - Error", ex.Message);
             }
