@@ -25,7 +25,7 @@ namespace AirTicketSearcher.Kiwi
             Program.logger.Info(result);
             KiwiRespond respond = JsonConvert.DeserializeObject<KiwiRespond>(result);
             string htmlMessage = MakeMailMessage(respond);
-            Mail mail = new Mail();
+            Mail mail = new Mail(this.config.emailConfig);
             mail.SendEmail("AirTicketSearcher - Japan",htmlMessage);
         }
 

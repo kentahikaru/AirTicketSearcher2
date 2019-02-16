@@ -20,12 +20,14 @@ namespace AirTicketSearcher
         public static NLog.Logger logger;
         static void Main(string[] args)
         {
+            Configuration.Config config = LoadConfig();
+
             try
             {
                 Console.WriteLine("Starting AirTicketSearcher program");
 
                 logger = NLogConfigManager.GetLogger();
-                Configuration.Config config = LoadConfig();
+                
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
@@ -54,7 +56,7 @@ namespace AirTicketSearcher
                 Console.WriteLine("Error happened");
                 Console.WriteLine(ex.Message);
                 logger.Error(ex.Message);
-                Mail.Mail mail = new Mail.Mail();
+                Mail.Mail mail = new Mail.Mail(config.emailConfig);
                 mail.SendEmail("AirTicketSearcher - Japan - Error", ex.Message);
             }
             //Console.ReadLine();
