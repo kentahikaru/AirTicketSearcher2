@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AirTicketSearcher.Configuration;
 using AirTicketSearcher.Kiwi;
+using AirTicketSearcher.Mail;
 using NLog;
 //using NLog.Common;
 using NLog.Config;
@@ -27,16 +29,33 @@ namespace AirTicketSearcher
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
+                // Mail.Mail email = new Mail.Mail();
 
+                // StringBuilder sb = new StringBuilder();
+                // sb.Append("<div><table>");
+                
+                // for(int i = 0; i < 6; i++)
+                // {
+                //     sb.Append("<tr>");
+                //     for(int j = 0 ; j < 5; j++)
+                //         sb.Append("<td>" + j.ToString() + "</td>");
+                //     sb.Append("</tr>");
+                // }
+                // sb.Append("</table></div>");
+
+                // email.SendEmail(sb.ToString());
               
 
-                Console.ReadLine();
+                //Console.ReadLine();
                 Console.WriteLine("Stopping AirTicketSearcher program");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error happened");
                 Console.WriteLine(ex.Message);
+                logger.Error(ex.Message);
+                Mail.Mail mail = new Mail.Mail();
+                mail.SendEmail("AirTicketSearcher - Japan - Error", ex.Message);
             }
             //Console.ReadLine();
         }

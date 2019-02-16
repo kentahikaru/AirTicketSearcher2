@@ -1,8 +1,8 @@
-namespace AirTicketSearcher.Responses
+namespace AirTicketSearcher.Kiwi
 {
     using System.Collections;
     using System.Collections.Generic;
-   
+
     public class KiwiRespond
     {
         public List<object> ref_tasks { get; set; }
@@ -15,10 +15,9 @@ namespace AirTicketSearcher.Responses
         public List<object> all_airlines { get; set; }
         public int time { get; set; }
         public List<object> all_stopover_airports { get; set; }
-        public List<Datum> data { get; set; }
+        public List<Data> data { get; set; }
         public string search_id { get; set; }
-    }
-
+    }   
     public class Seats
         {
         public int infants { get; set; }
@@ -45,7 +44,7 @@ namespace AirTicketSearcher.Responses
 
     public class BagsPrice
     {
-        public int __invalid_name__1 { get; set; }
+        public double __invalid_name__1 { get; set; }
     }
 
     public class Duration
@@ -106,7 +105,7 @@ namespace AirTicketSearcher.Responses
 
     public class Hold
     {
-        public int weight { get; set; }
+        public double weight { get; set; }
         public double price { get; set; }
         public int dimensions_sum { get; set; }
         public int height { get; set; }
@@ -118,26 +117,26 @@ namespace AirTicketSearcher.Responses
     public class Hand
     {
         public int width { get; set; }
-        public int price { get; set; }
+        public double price { get; set; }
         public int length { get; set; }
-        public int weight { get; set; }
+        public double weight { get; set; }
         public int height { get; set; }
     }
 
     public class PersonalItem
-    {
-        public int width { get; set; }
-        public int price { get; set; }
-        public int length { get; set; }
-        public int weight { get; set; }
-        public int height { get; set; }
-    }
+{
+    public int width { get; set; }
+    public double price { get; set; }
+    public int length { get; set; }
+    public double weight { get; set; }
+    public int height { get; set; }
+}
 
     public class Baggage
     {
-        public List<Hold> hold { get; set; }
-        public Hand hand { get; set; }
-        public PersonalItem personal_item { get; set; }
+ public List<Hold> hold { get; set; }
+    public Hand hand { get; set; }
+    public PersonalItem personal_item { get; set; }
     }
 
     public class CountryFrom
@@ -146,7 +145,7 @@ namespace AirTicketSearcher.Responses
         public string name { get; set; }
     }
 
-    public class Datum
+    public class Data
     {
         public string return_duration { get; set; }
         public double quality { get; set; }
@@ -187,4 +186,6 @@ namespace AirTicketSearcher.Responses
         public int aTime { get; set; }
         public CountryFrom countryFrom { get; set; }
     }
+
+
 }
