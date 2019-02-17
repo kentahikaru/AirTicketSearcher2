@@ -31,24 +31,6 @@ namespace AirTicketSearcher
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
-                // Mail.Mail email = new Mail.Mail();
-
-                // StringBuilder sb = new StringBuilder();
-                // sb.Append("<div><table>");
-                
-                // for(int i = 0; i < 6; i++)
-                // {
-                //     sb.Append("<tr>");
-                //     for(int j = 0 ; j < 5; j++)
-                //         sb.Append("<td>" + j.ToString() + "</td>");
-                //     sb.Append("</tr>");
-                // }
-                // sb.Append("</table></div>");
-
-                // email.SendEmail(sb.ToString());
-              
-
-                //Console.ReadLine();
                 Console.WriteLine("Stopping AirTicketSearcher program");
             }
             catch (Exception ex)
