@@ -38,6 +38,10 @@ namespace AirTicketSearcher.Configuration
                 config.kiwiConfig.kiwiUrlParameters[key] = kiwiSection[key];
             }
 
+            kiwiSection = ConfigurationManager.GetSection("kiwiWebUrlParameters") as NameValueCollection;
+            config.kiwiWebConfig.destinations = kiwiSection["destinations"];
+            config.kiwiWebConfig.numberOfNights = kiwiSection["number_of_nights"];
+
             int port;
             var emailSection = ConfigurationManager.GetSection("emailParameters") as NameValueCollection;
             config.emailConfig.smtpServer = emailSection["smtpServer"];

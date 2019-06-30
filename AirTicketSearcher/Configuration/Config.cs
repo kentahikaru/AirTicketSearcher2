@@ -5,5 +5,6 @@ namespace AirTicketSearcher.Configuration
     {
         public EmailConfig emailConfig = new EmailConfig();
         public KiwiConfig kiwiConfig = new KiwiConfig();
+        public KiwiWebConfig kiwiWebConfig = new KiwiWebConfig();
     }
 }

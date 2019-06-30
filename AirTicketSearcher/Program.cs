@@ -12,14 +12,21 @@ using AirTicketSearcher.Mail;
 using NLog;
 //using NLog.Common;
 using NLog.Config;
+using PuppeteerSharp;
 
 namespace AirTicketSearcher
 {
     class Program
     {
         public static NLog.Logger logger;
-        static void Main(string[] args)
+
+        public static void  Main(string[] args)
         {
+            //Test test = new Test();
+            //test.start();
+            ////test.neco();
+            //Console.ReadLine();
+
             Configuration.Config config = LoadConfig();
 
             try
@@ -27,7 +34,7 @@ namespace AirTicketSearcher
                 Console.WriteLine("Starting AirTicketSearcher program");
 
                 logger = NLogConfigManager.GetLogger();
-                
+
                 List<ISearch> searchersList = InitializeSearchers(config);
                 Search(searchersList);
 
@@ -38,7 +45,7 @@ namespace AirTicketSearcher
                 Console.WriteLine("Error happened");
                 Console.WriteLine(ex.Message);
                 logger.Error(ex.Message);
-                
+
                 Exception innerException = ex.InnerException;
 
                 while (innerException != null)
@@ -51,8 +58,9 @@ namespace AirTicketSearcher
                 Mail.Mail mail = new Mail.Mail(config.emailConfig);
                 mail.SendEmail("AirTicketSearcher - Japan - Error", ex.Message);
             }
-            //Console.ReadLine();
+            Console.ReadLine();
         }
+
 
         private static Configuration.Config LoadConfig()
         {
@@ -66,7 +74,8 @@ namespace AirTicketSearcher
         {
             List<ISearch> searcherList = new List<ISearch>();
 
-            searcherList.Add(new Kiwi.Kiwi(config));
+            //searcherList.Add(new Kiwi.Kiwi(config));
+            searcherList.Add(new Kiwi.KiwiWeb(config));
 
             return searcherList;
         }
