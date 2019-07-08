@@ -8,5 +8,6 @@ namespace AirTicketSearcher.Configuration
     {
         public string destinations;
         public string numberOfNights;
+        public int monthsToLookFor;
     }
 }

@@ -41,6 +41,7 @@ namespace AirTicketSearcher.Configuration
             kiwiSection = ConfigurationManager.GetSection("kiwiWebUrlParameters") as NameValueCollection;
             config.kiwiWebConfig.destinations = kiwiSection["destinations"];
             config.kiwiWebConfig.numberOfNights = kiwiSection["number_of_nights"];
+            config.kiwiWebConfig.monthsToLookFor = int.Parse(kiwiSection["months_to_look_for"]);
 
             int port;
             var emailSection = ConfigurationManager.GetSection("emailParameters") as NameValueCollection;
