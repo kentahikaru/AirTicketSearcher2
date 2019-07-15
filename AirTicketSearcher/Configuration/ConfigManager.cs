@@ -28,7 +28,9 @@ namespace AirTicketSearcher.Configuration
             // var appSettings = builder.Get<AppSettings>();
 
             Config config = new Config();
-            
+
+            config.chromePath = ConfigurationManager.AppSettings["chrome_path"];
+
             var kiwiSection = ConfigurationManager.GetSection("kiwiConfigParameters") as NameValueCollection;
             config.kiwiConfig.baseUrl = kiwiSection["base_url"];
 

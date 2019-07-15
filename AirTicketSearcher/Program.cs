@@ -44,6 +44,7 @@ namespace AirTicketSearcher
             {
                 Console.WriteLine("Error happened");
                 Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 logger.Error(ex.Message);
 
                 Exception innerException = ex.InnerException;

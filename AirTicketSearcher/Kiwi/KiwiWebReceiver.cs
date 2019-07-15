@@ -40,7 +40,7 @@ namespace AirTicketSearcher.Kiwi
 
                 Task.WaitAll(taskList.ToArray());
                 Console.WriteLine("Tasks waited");
-                currentDate = currentDate.AddMonths(1);
+                currentDate = currentDate.AddMonths(15);
             } while (currentDate < maxDate);
 
             List<string> htmlList = new List<string>();
@@ -76,6 +76,7 @@ namespace AirTicketSearcher.Kiwi
             using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
                 Headless = true,
+                ExecutablePath = this.config.chromePath,
             }))
             {
                 using (var page = await browser.NewPageAsync())
@@ -91,11 +92,33 @@ namespace AirTicketSearcher.Kiwi
 
 
                         //} while (element != null);
-                        element = await page.WaitForXPathAsync("Button.Button__StyledButton-sc-1brqp3f-1 kePvjv", null);
+                        element = await page.WaitForXPathAsync("//Button[contains(div,'Load More')]", null);
+                        //Task t = page.WaitForXPathAsync("Button.Button__StyledButton-sc-1brqp3f-1 kePvjv", null);
+                        //t.ContinueWith(async neco => {
+                        //     await page.ClickAsync("svg.JourneyArrow Icon__StyledIcon-sc-1pnzn3g-0 cuOaff", null);
+                        //})
+                        //await page.ClickAsync("svg.JourneyArrow Icon__StyledIcon-sc-1pnzn3g-0 cuOaff", null);
+                        await page.EvaluateFunctionAsync(@"() => { 
+                            var elements = document.getElementsByClassName('Journey-overview Journey-return'); 
+                            for (i = 0; i < elements.length; i++) { 
+                                elements[i].click(); 
+                            }
+                        }", "");
+
+
+
+                        await page.WaitForTimeoutAsync(10000);
+                        
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                         // because i don't know how else to do it
+                    }
+                    finally
+                    {
+                        //var elements = document.getElementsByClassName("Journey-overview Journey-return")
+                        //for(i = 0; i < elements.length; i++) {elements[i].click();}
                     }
 
                     result = await page.GetContentAsync();

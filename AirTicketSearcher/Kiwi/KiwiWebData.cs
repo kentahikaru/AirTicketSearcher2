@@ -18,6 +18,9 @@ namespace AirTicketSearcher.Kiwi
         public string departureDate;
         public string returnDate;
 
+        public string departureTime;
+        public string returnTime;
+
         public string bookingLink;
     }
 }
