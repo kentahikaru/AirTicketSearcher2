@@ -6,6 +6,7 @@ namespace AirTicketSearcher.Configuration
 {
     public class KiwiWebConfig
     {
+        public string origin;
         public string destinations;
         public string numberOfNights;
         public int monthsToLookFor;

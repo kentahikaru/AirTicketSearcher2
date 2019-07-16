@@ -36,9 +36,9 @@ namespace AirTicketSearcher.Kiwi
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
 
-            //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
-            HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
+            //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
+            //HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
 
             string resulttext = "";
             foreach (HtmlNode node in nodes)

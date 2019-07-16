@@ -18,33 +18,31 @@ namespace AirTicketSearcher.Kiwi
 
         public List<string> GetWebResults(int futureMonths)
         {
-            //DateTime maxDate = new DateTime(DateTime.Now.AddYears(1).Year, DateTime.Now.AddMonths(3).Month, 1);
-            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1);
-            DateTime maxDate = startDate.AddMonths(futureMonths);
-            DateTime currentDate = startDate;
-            string[] destinations = this.config.kiwiWebConfig.destinations.Split(',');
 
+            List<string> listUrls = MakeUrlList(futureMonths);
             List<Task<string>> taskList = new List<Task<string>>();
-            do
+            int i = 0;
+           
+            int step = 1;
+            for( i = 0; i < listUrls.Count; i += step)
             {
-                foreach (string destination in destinations)
-                {
-                    Console.WriteLine("destination: " + destination);
-                    string url = CreateUrl(destination, GetStartEndMonth(currentDate), this.config.kiwiWebConfig.numberOfNights);
+                //for (int j = 0; j < step; j++)
+                //{
                     //string kiwiHtmlTask =  GetWebHtmlAsync(url)
-                    taskList.Add(GetWebHtmlAsync(url));
+                    taskList.Add(GetWebHtmlAsync(listUrls[i]));
 
                     //string kiwiHtmlTask = await GetWebHtmlAsync(url);
-                    Console.WriteLine(GetStartEndMonth(currentDate));
-                }
+                    Console.WriteLine(listUrls[i]);
+
+                //}
 
                 Task.WaitAll(taskList.ToArray());
                 Console.WriteLine("Tasks waited");
-                currentDate = currentDate.AddMonths(15);
-            } while (currentDate < maxDate);
+            }
+                
 
             List<string> htmlList = new List<string>();
-            int i = 0;
+             i = 0;
             foreach (Task<string> task in taskList)
             {
                 htmlList.Add(task.Result);
@@ -54,6 +52,31 @@ namespace AirTicketSearcher.Kiwi
             return htmlList;
         }
 
+        private List<string> MakeUrlList(int futureMonths)
+        {
+            //DateTime maxDate = new DateTime(DateTime.Now.AddYears(1).Year, DateTime.Now.AddMonths(3).Month, 1);
+            DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1);
+            DateTime maxDate = startDate.AddMonths(futureMonths);
+            DateTime currentDate = startDate;
+            string[] destinations = this.config.kiwiWebConfig.destinations.Split(',');
+            List<string> listUrls = new List<string>();
+
+            do
+            {
+                foreach (string destination in destinations)
+                {
+                    Console.WriteLine("destination: " + destination);
+                    string url = CreateUrl(this.config.kiwiWebConfig.origin ,destination, GetStartEndMonth(currentDate), this.config.kiwiWebConfig.numberOfNights);
+
+                    listUrls.Add(url);
+                }
+
+                currentDate = currentDate.AddMonths(15);
+            } while (currentDate < maxDate);
+
+            return listUrls;
+        }
+
         public string GetStartEndMonth(DateTime currentDate)
         {
             DateTime endMonth = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
@@ -61,10 +84,10 @@ namespace AirTicketSearcher.Kiwi
             return currentDate.ToString("yyyy-MM-dd") + "_" + endMonth.ToString("yyyy-MM-dd");
         }
 
-        public string CreateUrl(string destination, string departureDate, string numberOfNights)
+        public string CreateUrl(string origin, string destination, string departureDate, string numberOfNights)
         {
 
-            string url = "https://www.kiwi.com/en/search/results/prague-czechia/" + destination + "/" + departureDate + "/" + numberOfNights;
+            string url = "https://www.kiwi.com/en/search/results/" + origin + "/" + destination + "/" + departureDate + "/" + numberOfNights;
             return url;
         }
 
@@ -75,13 +98,14 @@ namespace AirTicketSearcher.Kiwi
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
             using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
-                Headless = true,
+                Headless = false,
                 ExecutablePath = this.config.chromePath,
             }))
             {
                 using (var page = await browser.NewPageAsync())
                 {
-                    await page.GoToAsync("https://www.kiwi.com/en/search/results/prague-czechia/tokyo-japan/2019-10-02_2019-10-31/12-16", WaitUntilNavigation.Networkidle0);
+                    //page.DefaultTimeout = 60000;
+                    await page.GoToAsync(url, WaitUntilNavigation.Load);
                     try
                     {
                         ElementHandle element;
