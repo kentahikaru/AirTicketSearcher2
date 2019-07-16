@@ -131,7 +131,7 @@ namespace AirTicketSearcher.Kiwi
 
 
 
-                        await page.WaitForTimeoutAsync(10000);
+                        //await page.WaitForTimeoutAsync(10000);
                         
                     }
                     catch (Exception ex)

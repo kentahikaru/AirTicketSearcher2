@@ -20,8 +20,16 @@ namespace AirTicketSearcher.Kiwi
 
             foreach(string html in htmlList)
             {
-                List<KiwiWebData> listKiwiWebData = AnalyzeHtml(html);
-                listOfListsKiwiWebData.Add(listKiwiWebData);
+                try
+                {
+                    List<KiwiWebData> listKiwiWebData = AnalyzeHtml(html);
+                    listOfListsKiwiWebData.Add(listKiwiWebData);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
 
             }
 
@@ -36,8 +44,8 @@ namespace AirTicketSearcher.Kiwi
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(html);
 
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
-            //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
+            //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
             //HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
 
             string resulttext = "";
@@ -63,7 +71,7 @@ namespace AirTicketSearcher.Kiwi
                 kiwiWebData.departureTime = toDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
                 kiwiWebData.returnTime = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
 
-                //kiwiWebData.bookingLink = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
+                kiwiWebData.bookingLink = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
                 //HtmlNode nonode = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a");
                 //JourneyButtons
 
