@@ -23,18 +23,18 @@ namespace AirTicketSearcher.Kiwi
             List<Task<string>> taskList = new List<Task<string>>();
             int i = 0;
            
-            int step = 1;
+            int step = 3;
             for( i = 0; i < listUrls.Count; i += step)
             {
-                //for (int j = 0; j < step; j++)
-                //{
+                for (int j = 0; j < step; j++)
+                {
                     //string kiwiHtmlTask =  GetWebHtmlAsync(url)
                     taskList.Add(GetWebHtmlAsync(listUrls[i]));
 
                     //string kiwiHtmlTask = await GetWebHtmlAsync(url);
                     Console.WriteLine(listUrls[i]);
 
-                //}
+                }
 
                 Task.WaitAll(taskList.ToArray());
                 Console.WriteLine("Tasks waited");
