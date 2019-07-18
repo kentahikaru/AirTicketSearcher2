@@ -30,6 +30,8 @@ namespace AirTicketSearcher.Configuration
             Config config = new Config();
 
             config.chromePath = ConfigurationManager.AppSettings["chrome_path"];
+            config.monthsToLookFor = int.Parse(ConfigurationManager.AppSettings["months_to_look_for"]);
+            config.headless = bool.Parse(ConfigurationManager.AppSettings["headless"]);
 
             var kiwiSection = ConfigurationManager.GetSection("kiwiConfigParameters") as NameValueCollection;
             config.kiwiConfig.baseUrl = kiwiSection["base_url"];
@@ -44,7 +46,10 @@ namespace AirTicketSearcher.Configuration
             config.kiwiWebConfig.origin = kiwiSection["origin"];
             config.kiwiWebConfig.destinations = kiwiSection["destinations"];
             config.kiwiWebConfig.numberOfNights = kiwiSection["number_of_nights"];
-            config.kiwiWebConfig.monthsToLookFor = int.Parse(kiwiSection["months_to_look_for"]);
+
+            var pelikanSection = ConfigurationManager.GetSection("pelikanUrlParameters") as NameValueCollection;
+            config.pelikanConfig.origin = pelikanSection["origin"];
+            config.pelikanConfig.destinations = pelikanSection["destinations"];
 
             int port;
             var emailSection = ConfigurationManager.GetSection("emailParameters") as NameValueCollection;

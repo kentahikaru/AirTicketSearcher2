@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using PuppeteerSharp;
-
-namespace AirTicketSearcher.Kiwi
+﻿namespace AirTicketSearcher.Pelikan
 {
-    class KiwiWebReceiver
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+    using System.Threading.Tasks;
+    using PuppeteerSharp;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PelikanReceiver
     {
         Configuration.Config config = null;
 
-        public KiwiWebReceiver(Configuration.Config config)
+        public PelikanReceiver(Configuration.Config config)
         {
             this.config = config;
         }
 
         public List<string> GetWebResults(int futureMonths)
         {
-
             List<string> listUrls = MakeUrlList(futureMonths);
+
             List<Task<string>> taskList = new List<Task<string>>();
             int i = 0;
-           
+
             int step = 3;
-            for( i = 0; i < listUrls.Count; i += step)
+            for (i = 0; i < listUrls.Count; i += step)
             {
                 for (int j = 0; j < step; j++)
                 {
@@ -39,55 +42,46 @@ namespace AirTicketSearcher.Kiwi
                 Task.WaitAll(taskList.ToArray());
                 Console.WriteLine("Tasks waited");
             }
-                
 
             List<string> htmlList = new List<string>();
-             i = 0;
+            i = 0;
             foreach (Task<string> task in taskList)
             {
                 htmlList.Add(task.Result);
-                File.WriteAllText("Results" + i++.ToString() + ".html", task.Result);
+                File.WriteAllText("Pelikan" + i++.ToString() + ".html", task.Result);
             }
 
             return htmlList;
+
         }
 
         private List<string> MakeUrlList(int futureMonths)
         {
             //DateTime maxDate = new DateTime(DateTime.Now.AddYears(1).Year, DateTime.Now.AddMonths(3).Month, 1);
             DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, 1);
-            DateTime maxDate = startDate.AddMonths(futureMonths);
+            DateTime maxDate = startDate.AddMonths(futureMonths); // TODO: Prehodit future months do configu
             DateTime currentDate = startDate;
-            string[] destinations = this.config.kiwiWebConfig.destinations.Split(',');
+            string[] destinations = this.config.pelikanConfig.destinations.Split(',');
             List<string> listUrls = new List<string>();
 
             do
             {
                 foreach (string destination in destinations)
                 {
-                    Console.WriteLine("destination: " + destination);
-                    string url = CreateUrl(this.config.kiwiWebConfig.origin ,destination, GetStartEndMonth(currentDate), this.config.kiwiWebConfig.numberOfNights);
+                    string url = CreateUrl(this.config.pelikanConfig.origin, destination, currentDate.ToString("yyyy_MM_dd"), currentDate.AddDays(14).ToString("yyyy_MM_dd"));
 
                     listUrls.Add(url);
                 }
 
-                currentDate = currentDate.AddMonths(1);
+                currentDate = currentDate.AddDays(660);
             } while (currentDate < maxDate);
 
             return listUrls;
         }
 
-        public string GetStartEndMonth(DateTime currentDate)
+        public string CreateUrl(string origin, string destination, string departureDate, string returnDate)
         {
-            DateTime endMonth = new DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month));
-
-            return currentDate.ToString("yyyy-MM-dd") + "_" + endMonth.ToString("yyyy-MM-dd");
-        }
-
-        public string CreateUrl(string origin, string destination, string departureDate, string numberOfNights)
-        {
-
-            string url = "https://www.kiwi.com/en/search/results/" + origin + "/" + destination + "/" + departureDate + "/" + numberOfNights;
+            string url = "https://www.pelikan.cz/cs/letenky/T:1,P:1000E_0_0,CDF:C" + origin + ",CDT:C" + destination + ",R:1,DD:" + departureDate + ",DR:" + returnDate + "/";
             return url;
         }
 
@@ -105,7 +99,7 @@ namespace AirTicketSearcher.Kiwi
                 using (var page = await browser.NewPageAsync())
                 {
                     //page.DefaultTimeout = 60000;
-                    await page.GoToAsync(url, WaitUntilNavigation.Load);
+                    await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
                     try
                     {
                         ElementHandle element;
@@ -116,23 +110,27 @@ namespace AirTicketSearcher.Kiwi
 
 
                         //} while (element != null);
-                        element = await page.WaitForXPathAsync("//Button[contains(div,'Load More')]", null);
+                        //element = await page.WaitForXPathAsync("//button[@class='btn']", null);
+                        
+                        //element = await page.WaitForXPathAsync("//flights-fake-flight", null);
+                        
                         //Task t = page.WaitForXPathAsync("Button.Button__StyledButton-sc-1brqp3f-1 kePvjv", null);
                         //t.ContinueWith(async neco => {
                         //     await page.ClickAsync("svg.JourneyArrow Icon__StyledIcon-sc-1pnzn3g-0 cuOaff", null);
                         //})
                         //await page.ClickAsync("svg.JourneyArrow Icon__StyledIcon-sc-1pnzn3g-0 cuOaff", null);
-                        await page.EvaluateFunctionAsync(@"() => { 
-                            var elements = document.getElementsByClassName('Journey-overview Journey-return'); 
-                            for (i = 0; i < elements.length; i++) { 
-                                elements[i].click(); 
-                            }
-                        }", "");
+
+                        //await page.EvaluateFunctionAsync(@"() => { 
+                        //    var elements = document.getElementsByClassName('Journey-overview Journey-return'); 
+                        //    for (i = 0; i < elements.length; i++) { 
+                        //        elements[i].click(); 
+                        //    }
+                        //}", "");
 
 
 
                         //await page.WaitForTimeoutAsync(10000);
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -152,5 +150,6 @@ namespace AirTicketSearcher.Kiwi
 
             return result;
         }
+
     }
 }

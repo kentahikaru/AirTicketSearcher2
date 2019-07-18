@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AirTicketSearcher.Configuration;
 using AirTicketSearcher.Kiwi;
+using AirTicketSearcher.Pelikan;
 using AirTicketSearcher.Mail;
 using NLog;
 //using NLog.Common;
@@ -76,7 +77,8 @@ namespace AirTicketSearcher
             List<ISearch> searcherList = new List<ISearch>();
 
             //searcherList.Add(new Kiwi.Kiwi(config));
-            searcherList.Add(new Kiwi.KiwiWeb(config));
+            //searcherList.Add(new Kiwi.KiwiWeb(config));
+            searcherList.Add(new Pelikan.Pelikan(config));
 
             return searcherList;
         }

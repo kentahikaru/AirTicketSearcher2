@@ -27,7 +27,7 @@ namespace AirTicketSearcher.Kiwi
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
                 
 

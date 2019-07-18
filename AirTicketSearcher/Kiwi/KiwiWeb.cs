@@ -31,7 +31,7 @@ namespace AirTicketSearcher.Kiwi
             KiwiWebReceiver kiwiWebReceiver = new KiwiWebReceiver(this.config);
             KiwiWebAnalyzer kiwiWebAnalyzer = new KiwiWebAnalyzer(this.config);
 
-            List<string> resultList = kiwiWebReceiver.GetWebResults(this.config.kiwiWebConfig.monthsToLookFor);
+            List<string> resultList = kiwiWebReceiver.GetWebResults(this.config.monthsToLookFor);
             List<List<KiwiWebData>> listOfListOfResults = kiwiWebAnalyzer.AnalyzeWebResults(resultList);
 
             string htmlMessage = MakeMailMessage(listOfListOfResults);
