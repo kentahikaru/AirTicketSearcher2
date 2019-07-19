@@ -32,10 +32,11 @@
                 for (int j = 0; j < step; j++)
                 {
                     //string kiwiHtmlTask =  GetWebHtmlAsync(url)
-                    taskList.Add(GetWebHtmlAsync(listUrls[i]));
+                    string url = listUrls[i+j];
+                    taskList.Add(GetWebHtmlAsync(url));
 
                     //string kiwiHtmlTask = await GetWebHtmlAsync(url);
-                    Console.WriteLine(listUrls[i]);
+                    Console.WriteLine(url);
 
                 }
 
