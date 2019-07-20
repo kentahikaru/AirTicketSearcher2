@@ -51,31 +51,45 @@ namespace AirTicketSearcher.Kiwi
             string resulttext = "";
             foreach (HtmlNode node in nodes)
             {
-                KiwiWebData kiwiWebData = new KiwiWebData();
-                HtmlNodeCollection subnodesCollection = node.SelectNodes(".//div[@class='TripInfo _results']");
-                HtmlNode toDestination = subnodesCollection[0];
-                HtmlNode fromDestination = subnodesCollection[1];
+                try
+                {
+                    KiwiWebData kiwiWebData = new KiwiWebData();
+                    HtmlNodeCollection subnodesCollection = node.SelectNodes(".//div[@class='TripInfo _results']");
+                    HtmlNode toDestination = subnodesCollection[0];
+                    HtmlNode fromDestination = subnodesCollection[1];
 
-                kiwiWebData.price = node.SelectSingleNode(".//div[@class='JourneyInfoStyles__JourneyInfoPrice-vpsxn5-2 gnDWaH']").InnerText;//.GetAttributeValue;
-                kiwiWebData.lengthOfStay = node.SelectSingleNode(".//div[@class='Journey-nights-place']").InnerText;
+                    string price = node.SelectSingleNode(".//div[@class='JourneyInfoStyles__JourneyInfoPrice-vpsxn5-2 gnDWaH']").InnerText;//.GetAttributeValue;
+                    price = price.Replace(" ", "").Replace(",", "");
+                    int intPrice = int.Parse(price.Substring(0, price.Length - 2));
+                    if (intPrice > this.config.maxPrice)
+                        continue;
+
+                    kiwiWebData.price = price;
+                    kiwiWebData.lengthOfStay = node.SelectSingleNode(".//div[@class='Journey-nights-place']").InnerText;
+
+                    kiwiWebData.airlinesToDestination = toDestination.SelectSingleNode(".//div[@class='AirlineNames']").InnerText;
+                    kiwiWebData.airlinesFromDestination = fromDestination.SelectSingleNode(".//div[@class='AirlineNames']").InnerText;
+
+                    kiwiWebData.durationToDestination = toDestination.SelectSingleNode(".//div[@class='TripInfoField-flight-duration']").InnerText;
+                    kiwiWebData.durationFromDestination = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-flight-duration']").InnerText;
+
+                    kiwiWebData.departureDate = toDestination.SelectSingleNode(".//div[@class='TripInfoField-date']").InnerText;
+                    kiwiWebData.returnDate = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-date']").InnerText;
+
+                    kiwiWebData.departureTime = toDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
+                    kiwiWebData.returnTime = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
+
+                    kiwiWebData.bookingLink = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
+                                                                                                                                                          //HtmlNode nonode = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a");
+                                                                                                                                                          //JourneyButtons
+
+                    listHtmlData.Add(kiwiWebData);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                }
                 
-                kiwiWebData.airlinesToDestination = toDestination.SelectSingleNode(".//div[@class='AirlineNames']").InnerText;
-                kiwiWebData.airlinesFromDestination = fromDestination.SelectSingleNode(".//div[@class='AirlineNames']").InnerText;
-
-                kiwiWebData.durationToDestination = toDestination.SelectSingleNode(".//div[@class='TripInfoField-flight-duration']").InnerText;
-                kiwiWebData.durationFromDestination = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-flight-duration']").InnerText;
-
-                kiwiWebData.departureDate = toDestination.SelectSingleNode(".//div[@class='TripInfoField-date']").InnerText;
-                kiwiWebData.returnDate = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-date']").InnerText;
-
-                kiwiWebData.departureTime = toDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
-                kiwiWebData.returnTime = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
-
-                kiwiWebData.bookingLink = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
-                //HtmlNode nonode = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a");
-                //JourneyButtons
-
-                listHtmlData.Add(kiwiWebData);
 
             }
 

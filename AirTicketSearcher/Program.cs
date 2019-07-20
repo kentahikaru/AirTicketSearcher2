@@ -77,7 +77,7 @@ namespace AirTicketSearcher
             List<ISearch> searcherList = new List<ISearch>();
 
             //searcherList.Add(new Kiwi.Kiwi(config));
-            //searcherList.Add(new Kiwi.KiwiWeb(config));
+            searcherList.Add(new Kiwi.KiwiWeb(config));
             searcherList.Add(new Pelikan.Pelikan(config));
 
             return searcherList;

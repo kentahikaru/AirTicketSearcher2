@@ -32,6 +32,7 @@ namespace AirTicketSearcher.Configuration
             config.chromePath = ConfigurationManager.AppSettings["chrome_path"];
             config.monthsToLookFor = int.Parse(ConfigurationManager.AppSettings["months_to_look_for"]);
             config.headless = bool.Parse(ConfigurationManager.AppSettings["headless"]);
+            config.maxPrice = int.Parse(ConfigurationManager.AppSettings["max_price"]);
 
             var kiwiSection = ConfigurationManager.GetSection("kiwiConfigParameters") as NameValueCollection;
             config.kiwiConfig.baseUrl = kiwiSection["base_url"];

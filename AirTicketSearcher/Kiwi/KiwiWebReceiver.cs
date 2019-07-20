@@ -72,7 +72,7 @@ namespace AirTicketSearcher.Kiwi
                     listUrls.Add(url);
                 }
 
-                currentDate = currentDate.AddMonths(1);
+                currentDate = currentDate.AddMonths(15);
             } while (currentDate < maxDate);
 
             return listUrls;
