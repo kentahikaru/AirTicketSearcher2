@@ -64,17 +64,18 @@
                 {
                     PelikanSubData pelikanSubData = new PelikanSubData();
 
-                    pelikanSubData.Tolerance = subNode.SelectSingleNode("//div[@class='fly-item-tolerance-new-reservation']")?.InnerHtml;
-                    pelikanSubData.departureDay = subNode.SelectSingleNode("//span[@class='fly-item-day-new-reservation']").InnerHtml;
-                    pelikanSubData.departureCity = subNode.SelectSingleNode("//div[@class='first-dest-item']").SelectSingleNode(".//h1[@class='airport']").InnerHtml;
-                    pelikanSubData.departureTime = subNode.SelectSingleNode("//div[@class='first-dest-item']").SelectSingleNode(".//span[@class='fly-item-time-new-reservation active']").InnerHtml;
-                    pelikanSubData.departureAirport = subNode.SelectSingleNode("//div[@class='first-dest-item']").SelectSingleNode(".//div[@class='place-define']").InnerHtml;
+                    pelikanSubData.Tolerance = subNode.SelectSingleNode(".//div[@class='fly-item-tolerance-new-reservation']")?.InnerHtml;
+                    pelikanSubData.departureDay = subNode.SelectSingleNode(".//span[@class='fly-item-day-new-reservation']")?.InnerHtml;
+                    pelikanSubData.departureDate = subNode.SelectSingleNode(".//div[@class='fly-item-one-trip-no-radio-new-reservation']")?.InnerText;
+                    pelikanSubData.departureCity = subNode.SelectSingleNode(".//div[@class='first-dest-item']")?.SelectSingleNode(".//h1[@class='airport']")?.InnerHtml;
+                    pelikanSubData.departureTime = subNode.SelectSingleNode(".//div[@class='first-dest-item']")?.SelectSingleNode(".//span[@class='fly-item-time-new-reservation active']")?.InnerHtml;
+                    pelikanSubData.departureAirport = subNode.SelectSingleNode(".//div[@class='first-dest-item']")?.SelectSingleNode(".//div[@class='place-define']")?.InnerHtml;
 
-                    pelikanSubData.durationToDestination = subNode.SelectSingleNode("//div[@class='fly-item-arrow-new-reservation']/div").InnerText;
+                    pelikanSubData.durationToDestination = subNode.SelectSingleNode(".//div[@class='fly-item-arrow-new-reservation']/div").InnerText;
 
-                    pelikanSubData.destinationCity = subNode.SelectSingleNode("//div[@class='second-dest-item']").SelectSingleNode(".//h1[@class='airport']").InnerHtml;
-                    pelikanSubData.destinationTime = subNode.SelectSingleNode("//div[@class='second-dest-item']").SelectSingleNode(".//span[@class='fly-item-time-new-reservation active']").InnerHtml;
-                    pelikanSubData.destinationAirport = subNode.SelectSingleNode("//div[@class='second-dest-item']").SelectSingleNode(".//div[@class='place-define']").InnerHtml;
+                    pelikanSubData.destinationCity = subNode.SelectSingleNode(".//div[@class='second-dest-item']")?.SelectSingleNode(".//h1[@class='airport']")?.InnerHtml;
+                    pelikanSubData.destinationTime = subNode.SelectSingleNode(".//div[@class='second-dest-item']")?.SelectSingleNode(".//span[@class='fly-item-time-new-reservation active']")?.InnerHtml;
+                    pelikanSubData.destinationAirport = subNode.SelectSingleNode(".//div[@class='second-dest-item']")?.SelectSingleNode(".//div[@class='place-define']")?.InnerHtml;
 
                     pelikanbData.listPelikanSubData.Add(pelikanSubData);
                 }
