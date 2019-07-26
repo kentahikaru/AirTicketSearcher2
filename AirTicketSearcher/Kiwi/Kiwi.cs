@@ -19,7 +19,7 @@ namespace AirTicketSearcher.Kiwi
 
         public void Run()
         {
-            string htmlMessage;
+            string htmlMessage = "";
 
             try
             {

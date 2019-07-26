@@ -19,7 +19,7 @@
 
         public void Run()
         {
-            string htmlMessage
+            string htmlMessage = "";
             try
             {
                 PelikanReceiver pelikanReceiver = new PelikanReceiver(this.config);
