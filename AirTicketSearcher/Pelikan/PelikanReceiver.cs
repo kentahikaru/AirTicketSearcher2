@@ -95,6 +95,7 @@
             {
                 Headless = this.config.headless,
                 ExecutablePath = this.config.chromePath,
+                //Args = new string[] { "--disable-infobars", "--user-data-dir=/home/pi/.config/chromium" },
             }))
             {
                 using (var page = await browser.NewPageAsync())
@@ -136,6 +137,7 @@
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        await page.ScreenshotAsync("screenshot.jpg");
                         // because i don't know how else to do it
                     }
                     finally

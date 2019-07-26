@@ -66,7 +66,6 @@ namespace AirTicketSearcher.Kiwi
             {
                 foreach (string destination in destinations)
                 {
-                    Console.WriteLine("destination: " + destination);
                     string url = CreateUrl(this.config.kiwiWebConfig.origin ,destination, GetStartEndMonth(currentDate), this.config.kiwiWebConfig.numberOfNights);
 
                     listUrls.Add(url);
@@ -101,12 +100,14 @@ namespace AirTicketSearcher.Kiwi
             {
                 Headless = this.config.headless,
                 ExecutablePath = this.config.chromePath,
+                //Args = new string[] { "--incognito" },
+                //Args = new string[] { "--disable-infobars", "--user-data-dir=/home/pi/.config/chromium" },
             }))
             {
                 using (var page = await browser.NewPageAsync())
                 {
                     //page.DefaultTimeout = 60000;
-                    await page.GoToAsync(url, WaitUntilNavigation.Load);
+                    await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
                     try
                     {
                         ElementHandle element;
@@ -137,6 +138,7 @@ namespace AirTicketSearcher.Kiwi
                     }
                     catch (Exception ex)
                     {
+                        await page.ScreenshotAsync("screenshot.jpg");
                         Console.WriteLine(ex.Message);
                         // because i don't know how else to do it
                     }

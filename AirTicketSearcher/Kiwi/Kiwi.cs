@@ -4,9 +4,10 @@ namespace AirTicketSearcher.Kiwi
     using System.Collections.Generic;
     using System;
     using System.Text;
-    using AirTicketSearcher.TransportLayer;
     using Newtonsoft.Json;
     using AirTicketSearcher.Mail;
+    using AirTicketSearcher.TransportLayer;
+    using AirTicketSearcher.Common;
 
     public class Kiwi : ISearch
     {
@@ -18,14 +19,21 @@ namespace AirTicketSearcher.Kiwi
 
         public void Run()
         {
-            
+            string htmlMessage;
 
-            List<KiwiRespond> listRespond = GetResults();
-            
+            try
+            {
+                List<KiwiRespond> listRespond = GetResults();
+                htmlMessage = MakeMailMessage(listRespond);
+            }
+            catch(Exception ex)
+            {
+                htmlMessage = ex.GetError();
+            }
 
-            string htmlMessage = MakeMailMessage(listRespond);
+
             Mail mail = new Mail(this.config.emailConfig);
-            mail.SendEmail("AirTicketSearcher - Japan",htmlMessage);
+            mail.SendEmail(this.config.kiwiConfig.emailSubject, htmlMessage);
         }
 
         private List<KiwiRespond> GetResults()

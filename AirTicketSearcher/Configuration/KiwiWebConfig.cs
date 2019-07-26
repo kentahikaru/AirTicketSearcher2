@@ -9,5 +9,6 @@ namespace AirTicketSearcher.Configuration
         public string origin;
         public string destinations;
         public string numberOfNights;
+        public string emailSubject;
     }
 }

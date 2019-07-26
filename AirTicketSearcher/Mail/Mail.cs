@@ -5,6 +5,7 @@ namespace AirTicketSearcher.Mail
 	using System.Text;
     using MailKit;
     using MimeKit;
+    using MailKit.Security;
 	using MailKit.Net.Smtp;
 	using AirTicketSearcher.Configuration;
 
@@ -52,9 +53,11 @@ namespace AirTicketSearcher.Mail
 			//Be careful that the SmtpClient class is the one from Mailkit not the framework!
 			using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
 			{
-				//The last parameter here is to use SSL (Which you should!)
-				emailClient.Connect(this.emailConfig.smtpServer, this.emailConfig.port, true);
-		
+                emailClient.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                //The last parameter here is to use SSL (Which you should!)
+                emailClient.Connect(this.emailConfig.smtpServer, this.emailConfig.port, SecureSocketOptions.SslOnConnect);
+
 				//Remove any OAuth functionality as we won't be using it. 
 				emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
 		

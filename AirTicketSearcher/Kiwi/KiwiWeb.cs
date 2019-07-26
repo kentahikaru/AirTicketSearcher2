@@ -8,11 +8,12 @@ namespace AirTicketSearcher.Kiwi
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Threading.Tasks;
     using PuppeteerSharp;
-    using System.IO;
     using AirTicketSearcher.Mail;
+    using AirTicketSearcher.Common;
 
     /// <summary>
     /// 
@@ -28,15 +29,23 @@ namespace AirTicketSearcher.Kiwi
 
         public void Run()
         {
-            KiwiWebReceiver kiwiWebReceiver = new KiwiWebReceiver(this.config);
-            KiwiWebAnalyzer kiwiWebAnalyzer = new KiwiWebAnalyzer(this.config);
+            string htmlMessage = "";
+            try
+            {
+                KiwiWebReceiver kiwiWebReceiver = new KiwiWebReceiver(this.config);
+                KiwiWebAnalyzer kiwiWebAnalyzer = new KiwiWebAnalyzer(this.config);
 
-            List<string> resultList = kiwiWebReceiver.GetWebResults(this.config.monthsToLookFor);
-            List<List<KiwiWebData>> listOfListOfResults = kiwiWebAnalyzer.AnalyzeWebResults(resultList);
+                List<string> resultList = kiwiWebReceiver.GetWebResults(this.config.monthsToLookFor);
+                List<List<KiwiWebData>> listOfListOfResults = kiwiWebAnalyzer.AnalyzeWebResults(resultList);
+                htmlMessage = MakeMailMessage(listOfListOfResults);
+            }
+            catch(Exception ex)
+            {
+                htmlMessage = ex.GetError();
+            }
 
-            string htmlMessage = MakeMailMessage(listOfListOfResults);
             Mail mail = new Mail(this.config.emailConfig);
-            mail.SendEmail("KiwiWeb - Japan", htmlMessage);
+            mail.SendEmail(this.config.kiwiWebConfig.emailSubject, htmlMessage);
 
         }
 

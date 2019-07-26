@@ -58,7 +58,7 @@ namespace AirTicketSearcher
                 }
 
                 Mail.Mail mail = new Mail.Mail(config.emailConfig);
-                mail.SendEmail("AirTicketSearcher - Japan - Error", ex.Message);
+                mail.SendEmail("AirTicketSearcher - Error", ex.Message);
             }
             Console.ReadLine();
         }

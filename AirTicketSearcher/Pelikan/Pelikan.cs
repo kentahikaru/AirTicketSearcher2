@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
     using AirTicketSearcher.Mail;
+    using AirTicketSearcher.Common;
 
     /// <summary>
     /// 
@@ -18,15 +19,24 @@
 
         public void Run()
         {
-            PelikanReceiver pelikanReceiver = new PelikanReceiver(this.config);
-            PelikanAnalyzer pelikanAnalyzer = new PelikanAnalyzer(this.config);
+            string htmlMessage
+            try
+            {
+                PelikanReceiver pelikanReceiver = new PelikanReceiver(this.config);
+                PelikanAnalyzer pelikanAnalyzer = new PelikanAnalyzer(this.config);
 
-            List<string> resultList = pelikanReceiver.GetWebResults(this.config.monthsToLookFor);
-            List<List<PelikanData>> listOfListOfResults = pelikanAnalyzer.AnalyzeWebResults(resultList);
+                List<string> resultList = pelikanReceiver.GetWebResults(this.config.monthsToLookFor);
+                List<List<PelikanData>> listOfListOfResults = pelikanAnalyzer.AnalyzeWebResults(resultList);
 
-            string htmlMessage = MakeMailMessage(listOfListOfResults);
+                htmlMessage = MakeMailMessage(listOfListOfResults);
+            }
+            catch(Exception ex)
+            {
+                htmlMessage = ex.GetError();
+            }
+            
             Mail mail = new Mail(this.config.emailConfig);
-            mail.SendEmail("Pelikan - Japan", htmlMessage);
+            mail.SendEmail(this.config.pelikanConfig.emailSubject, htmlMessage);
 
         }
 

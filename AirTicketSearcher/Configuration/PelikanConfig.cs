@@ -17,5 +17,6 @@ namespace AirTicketSearcher.Configuration
     {
         public string origin;
         public string destinations;
+        public string emailSubject;
     }
 }
