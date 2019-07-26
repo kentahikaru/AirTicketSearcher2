@@ -13,7 +13,6 @@ namespace AirTicketSearcher.Kiwi
     using System.Threading.Tasks;
     using PuppeteerSharp;
     using AirTicketSearcher.Mail;
-    using AirTicketSearcher.Common;
 
     /// <summary>
     /// 

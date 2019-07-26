@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Text;
     using AirTicketSearcher.Mail;
-    using AirTicketSearcher.Common;
 
     /// <summary>
     /// 

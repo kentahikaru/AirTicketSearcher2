@@ -51,7 +51,6 @@
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[contains(@id,'flight-1000')]");
             //HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
 
-            string resulttext = "";
             foreach (HtmlNode node in nodes)
             {
                 try

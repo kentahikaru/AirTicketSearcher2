@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using HtmlAgilityPack;
+using NLog;
 
 namespace AirTicketSearcher.Kiwi
 {
     class KiwiWebAnalyzer
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         Configuration.Config config = null;
 
         public KiwiWebAnalyzer(Configuration.Config config)
@@ -27,9 +29,9 @@ namespace AirTicketSearcher.Kiwi
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                    Logger.Debug(Environment.NewLine + html + Environment.NewLine);
                 }
-                
+
 
             }
 
@@ -45,10 +47,16 @@ namespace AirTicketSearcher.Kiwi
             doc.LoadHtml(html);
 
             //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
+            //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open _unseen']");
             //HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(".//div[contains(@class,'Journey clear spCard open')]");
+            
+            if (nodes == null || nodes.Count == 0)
+            {
+                throw new Exception(html);
+            }
+                
 
-            string resulttext = "";
             foreach (HtmlNode node in nodes)
             {
                 try

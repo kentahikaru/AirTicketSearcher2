@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PuppeteerSharp;
 
+
 namespace AirTicketSearcher.Kiwi
 {
     class KiwiWebReceiver
@@ -138,8 +139,8 @@ namespace AirTicketSearcher.Kiwi
                     }
                     catch (Exception ex)
                     {
-                        await page.ScreenshotAsync("screenshot.jpg");
-                        Console.WriteLine(ex.Message);
+                        await page.ScreenshotAsync("KiwiWebScreenshot.jpg");
+                        Console.WriteLine(ex.GetError());
                         // because i don't know how else to do it
                     }
                     finally

@@ -7,7 +7,6 @@ namespace AirTicketSearcher.Kiwi
     using Newtonsoft.Json;
     using AirTicketSearcher.Mail;
     using AirTicketSearcher.TransportLayer;
-    using AirTicketSearcher.Common;
 
     public class Kiwi : ISearch
     {

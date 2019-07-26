@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AirTicketSearcher.Common
+namespace AirTicketSearcher
 {
     public static class Utility
     {

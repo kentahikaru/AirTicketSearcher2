@@ -104,7 +104,7 @@
                     await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
                     try
                     {
-                        ElementHandle element;
+                        //ElementHandle element;
                         //do
                         //{
                         //    element = await page.WaitForXPathAsync("div.LoadingProviders", options: new WaitForSelectorOptions() {Timeout = 1});
@@ -136,8 +136,8 @@
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        await page.ScreenshotAsync("screenshot.jpg");
+                        Console.WriteLine(ex.GetError());
+                        await page.ScreenshotAsync("PelikanScreenshot.jpg");
                         // because i don't know how else to do it
                     }
                     finally
