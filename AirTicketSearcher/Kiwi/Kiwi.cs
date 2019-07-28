@@ -27,6 +27,7 @@ namespace AirTicketSearcher.Kiwi
             }
             catch(Exception ex)
             {
+                Console.WriteLine(ex.GetError());
                 htmlMessage = ex.GetError();
             }
 

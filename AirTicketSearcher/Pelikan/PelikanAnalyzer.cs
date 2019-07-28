@@ -30,7 +30,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                    Console.WriteLine(ex.GetError());
                 }
 
 
@@ -91,7 +91,7 @@
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                    Console.WriteLine(ex.GetError());
                 }
               
 

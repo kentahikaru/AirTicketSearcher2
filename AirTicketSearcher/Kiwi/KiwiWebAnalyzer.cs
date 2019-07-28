@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using HtmlAgilityPack;
 using NLog;
@@ -8,7 +9,6 @@ namespace AirTicketSearcher.Kiwi
 {
     class KiwiWebAnalyzer
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         Configuration.Config config = null;
 
         public KiwiWebAnalyzer(Configuration.Config config)
@@ -29,7 +29,9 @@ namespace AirTicketSearcher.Kiwi
                 }
                 catch (Exception ex)
                 {
-                    Logger.Debug(Environment.NewLine + html + Environment.NewLine);
+                    Console.WriteLine(ex.GetError());
+                    File.WriteAllText("KiwiPage.html", html);
+
                 }
 
 
@@ -53,7 +55,7 @@ namespace AirTicketSearcher.Kiwi
             
             if (nodes == null || nodes.Count == 0)
             {
-                throw new Exception(html);
+                throw new Exception("No Nodes to analyze");
             }
                 
 
@@ -95,7 +97,7 @@ namespace AirTicketSearcher.Kiwi
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine(ex.Message + Environment.NewLine + ex.StackTrace);
+                    Console.WriteLine(ex.GetError());
                 }
                 
 

@@ -34,8 +34,8 @@ namespace AirTicketSearcher.Configuration
             };
             
             // Console Rule
-            loggingConfig.AddTarget(consoleTarget);
-            loggingConfig.AddRuleForAllLevels(consoleTarget);
+            //loggingConfig.AddTarget(consoleTarget);
+            //loggingConfig.AddRuleForAllLevels(consoleTarget);
 
             NLog.LogManager.Configuration = loggingConfig;
             NLog.LogManager.ThrowConfigExceptions = true;
@@ -43,7 +43,7 @@ namespace AirTicketSearcher.Configuration
             
             InternalLogger.LogToConsole = true;
             InternalLogger.LogFile = "logs/internal.log";
-            InternalLogger.LogLevel = LogLevel.Trace;
+            InternalLogger.LogLevel = LogLevel.Debug;
 
             logger = NLog.LogManager.GetLogger("myLogger");
 

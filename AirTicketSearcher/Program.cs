@@ -44,8 +44,7 @@ namespace AirTicketSearcher
             catch (Exception ex)
             {
                 Console.WriteLine("Error happened");
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.GetError());
                 logger.Error(ex.Message);
 
                 Exception innerException = ex.InnerException;
@@ -78,7 +77,7 @@ namespace AirTicketSearcher
 
             //searcherList.Add(new Kiwi.Kiwi(config));
             searcherList.Add(new Kiwi.KiwiWeb(config));
-            searcherList.Add(new Pelikan.Pelikan(config));
+            //searcherList.Add(new Pelikan.Pelikan(config));
 
             return searcherList;
         }

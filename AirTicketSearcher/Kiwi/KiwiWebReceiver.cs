@@ -47,8 +47,12 @@ namespace AirTicketSearcher.Kiwi
              i = 0;
             foreach (Task<string> task in taskList)
             {
-                htmlList.Add(task.Result);
-                File.WriteAllText("Results" + i++.ToString() + ".html", task.Result);
+                if(task.Result != "")
+                {
+                    htmlList.Add(task.Result);
+                    File.WriteAllText("Results" + i++.ToString() + ".html", task.Result);
+                }
+                
             }
 
             return htmlList;
@@ -107,10 +111,11 @@ namespace AirTicketSearcher.Kiwi
             {
                 using (var page = await browser.NewPageAsync())
                 {
-                    //page.DefaultTimeout = 60000;
-                    await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
                     try
                     {
+                        //page.DefaultTimeout = 60000;
+                        await page.GoToAsync(url, WaitUntilNavigation.DOMContentLoaded);
+                        //await page.GoToAsync(url, NavigationOptions.)
                         ElementHandle element;
                         //do
                         //{
@@ -133,15 +138,15 @@ namespace AirTicketSearcher.Kiwi
                         }", "");
 
 
-
                         //await page.WaitForTimeoutAsync(10000);
-                        
+                        result = await page.GetContentAsync();
                     }
                     catch (Exception ex)
                     {
-                        await page.ScreenshotAsync("KiwiWebScreenshot.jpg");
+                        await page.ScreenshotAsync("KiwiWebScreenshot.jpg",new ScreenshotOptions() { FullPage = true});
                         Console.WriteLine(ex.GetError());
                         // because i don't know how else to do it
+                        result = "";
                     }
                     finally
                     {
@@ -149,7 +154,7 @@ namespace AirTicketSearcher.Kiwi
                         //for(i = 0; i < elements.length; i++) {elements[i].click();}
                     }
 
-                    result = await page.GetContentAsync();
+                    
 
                 }
             }
