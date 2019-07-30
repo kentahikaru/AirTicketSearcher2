@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using HtmlAgilityPack;
 
@@ -31,6 +32,7 @@
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.GetError());
+                    File.WriteAllText("PelikanPage.html", html);
                 }
 
 
@@ -50,6 +52,11 @@
             //HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='Journey-overview Journey-return']");
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[contains(@id,'flight-1000')]");
             //HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[@class='Journey clear spCard open']");
+
+            if (nodes == null || nodes.Count == 0)
+            {
+                throw new Exception("No Nodes to analyze");
+            }
 
             foreach (HtmlNode node in nodes)
             {

@@ -59,7 +59,7 @@ namespace AirTicketSearcher
                 Mail.Mail mail = new Mail.Mail(config.emailConfig);
                 mail.SendEmail("AirTicketSearcher - Error", ex.Message);
             }
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
 
@@ -77,7 +77,7 @@ namespace AirTicketSearcher
 
             //searcherList.Add(new Kiwi.Kiwi(config));
             searcherList.Add(new Kiwi.KiwiWeb(config));
-            //searcherList.Add(new Pelikan.Pelikan(config));
+            searcherList.Add(new Pelikan.Pelikan(config));
 
             return searcherList;
         }

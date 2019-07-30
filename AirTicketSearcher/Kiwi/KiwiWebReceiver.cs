@@ -50,7 +50,7 @@ namespace AirTicketSearcher.Kiwi
                 if(task.Result != "")
                 {
                     htmlList.Add(task.Result);
-                    File.WriteAllText("Results" + i++.ToString() + ".html", task.Result);
+                    //File.WriteAllText("KiwiWeb" + i++.ToString() + ".html", task.Result);
                 }
                 
             }
@@ -76,7 +76,7 @@ namespace AirTicketSearcher.Kiwi
                     listUrls.Add(url);
                 }
 
-                currentDate = currentDate.AddMonths(15);
+                currentDate = currentDate.AddMonths(1);
             } while (currentDate < maxDate);
 
             return listUrls;
@@ -121,7 +121,7 @@ namespace AirTicketSearcher.Kiwi
                         //{
                         //    element = await page.WaitForXPathAsync("div.LoadingProviders", options: new WaitForSelectorOptions() {Timeout = 1});
 
-
+                        await page.WaitForTimeoutAsync(15000);
 
                         //} while (element != null);
                         element = await page.WaitForXPathAsync("//Button[contains(div,'Load More')]", null);

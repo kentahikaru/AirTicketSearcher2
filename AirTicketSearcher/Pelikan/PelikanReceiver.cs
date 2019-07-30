@@ -48,8 +48,11 @@
             i = 0;
             foreach (Task<string> task in taskList)
             {
-                htmlList.Add(task.Result);
-                File.WriteAllText("Pelikan" + i++.ToString() + ".html", task.Result);
+                if (task.Result != "")
+                {
+                    htmlList.Add(task.Result);
+                    File.WriteAllText("Pelikan" + i++.ToString() + ".html", task.Result);
+                }
             }
 
             return htmlList;
@@ -74,7 +77,7 @@
                     listUrls.Add(url);
                 }
 
-                currentDate = currentDate.AddDays(660);
+                currentDate = currentDate.AddDays(6);
             } while (currentDate < maxDate);
 
             return listUrls;
@@ -101,7 +104,7 @@
                 using (var page = await browser.NewPageAsync())
                 {
                     //page.DefaultTimeout = 60000;
-                    await page.GoToAsync(url, WaitUntilNavigation.Networkidle0);
+                    await page.GoToAsync(url, WaitUntilNavigation.Load);
                     try
                     {
                         //ElementHandle element;
@@ -109,13 +112,13 @@
                         //{
                         //    element = await page.WaitForXPathAsync("div.LoadingProviders", options: new WaitForSelectorOptions() {Timeout = 1});
 
-
+                        await page.WaitForNavigationAsync(new NavigationOptions() {  });
 
                         //} while (element != null);
                         //element = await page.WaitForXPathAsync("//button[@class='btn']", null);
-                        
+                        await page.WaitForXPathAsync("//button[@class='btn']", null);
                         //element = await page.WaitForXPathAsync("//flights-fake-flight", null);
-                        
+
                         //Task t = page.WaitForXPathAsync("Button.Button__StyledButton-sc-1brqp3f-1 kePvjv", null);
                         //t.ContinueWith(async neco => {
                         //     await page.ClickAsync("svg.JourneyArrow Icon__StyledIcon-sc-1pnzn3g-0 cuOaff", null);
@@ -132,12 +135,14 @@
 
 
                         //await page.WaitForTimeoutAsync(10000);
+                        result = await page.GetContentAsync();
 
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.GetError());
                         await page.ScreenshotAsync("PelikanScreenshot.jpg");
+                        result = "";
                         // because i don't know how else to do it
                     }
                     finally
@@ -146,7 +151,7 @@
                         //for(i = 0; i < elements.length; i++) {elements[i].click();}
                     }
 
-                    result = await page.GetContentAsync();
+                    
 
                 }
             }
