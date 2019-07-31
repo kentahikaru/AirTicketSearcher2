@@ -121,7 +121,7 @@ namespace AirTicketSearcher.Kiwi
                         //{
                         //    element = await page.WaitForXPathAsync("div.LoadingProviders", options: new WaitForSelectorOptions() {Timeout = 1});
 
-                        await page.WaitForTimeoutAsync(15000);
+                        //await page.WaitForTimeoutAsync(15000);
 
                         //} while (element != null);
                         element = await page.WaitForXPathAsync("//Button[contains(div,'Load More')]", null);

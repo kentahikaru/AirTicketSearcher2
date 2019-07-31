@@ -98,12 +98,13 @@
             {
                 Headless = this.config.headless,
                 ExecutablePath = this.config.chromePath,
-                //Args = new string[] { "--disable-infobars", "--user-data-dir=/home/pi/.config/chromium" },
+                //Args = new string[] { "--disable-infobars", "--user-data-dir=/home/pi/.config/chromium", "--version" },
+                Args = new string[] { "--ignore-certificate-errors" },
             }))
             {
                 using (var page = await browser.NewPageAsync())
                 {
-                    //page.DefaultTimeout = 60000;
+                    page.DefaultTimeout = 30000;
                     await page.GoToAsync(url, WaitUntilNavigation.Load);
                     try
                     {
@@ -112,11 +113,11 @@
                         //{
                         //    element = await page.WaitForXPathAsync("div.LoadingProviders", options: new WaitForSelectorOptions() {Timeout = 1});
 
-                        await page.WaitForNavigationAsync(new NavigationOptions() {  });
+                        // await page.WaitForNavigationAsync(new NavigationOptions() { WaitUntil = new WaitUntilNavigation[] { WaitUntilNavigation.Networkidle0 }  });
 
                         //} while (element != null);
                         //element = await page.WaitForXPathAsync("//button[@class='btn']", null);
-                        await page.WaitForXPathAsync("//button[@class='btn']", null);
+                        //await page.WaitForXPathAsync("//button[@class='btn']", null);
                         //element = await page.WaitForXPathAsync("//flights-fake-flight", null);
 
                         //Task t = page.WaitForXPathAsync("Button.Button__StyledButton-sc-1brqp3f-1 kePvjv", null);
@@ -132,6 +133,7 @@
                         //    }
                         //}", "");
 
+                        await page.WaitForXPathAsync("//div[contains(@id,'flight-1000')]",null);
 
 
                         //await page.WaitForTimeoutAsync(10000);
