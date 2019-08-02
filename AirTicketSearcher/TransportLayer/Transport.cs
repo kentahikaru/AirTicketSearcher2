@@ -28,7 +28,7 @@ namespace AirTicketSearcher.TransportLayer
             // WORKS ---------
             WebClient client = new WebClient();
             string result = client.DownloadString(url);
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
 
             return result;
         }
