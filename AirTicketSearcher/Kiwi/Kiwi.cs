@@ -46,22 +46,29 @@ namespace AirTicketSearcher.Kiwi
             {
                 try
                 {
-                string url = ComposeUrl(destination);
-                Program.logger.Info(url);
-                string result = tr.GetDataFromWeb(url);
-                //Program.logger.Info(result);
-                KiwiRespond respond = JsonConvert.DeserializeObject<KiwiRespond>(result);
-                if(respond.data.Count > 0)
-                    listResponses.Add(respond);
+                    string url = ComposeUrl(destination);
+                    //Program.logger.Info(url);
+                    Console.WriteLine(url);
+                    string result = tr.GetDataFromWeb(url);
+                    //Program.logger.Info(result);
+                    KiwiRespond respond = JsonConvert.DeserializeObject<KiwiRespond>(result);
+                    if (respond.data.Count > 0)
+                    {
+                        listResponses.Add(respond);
+                    }
+                    else
+                    {
+                        //Program.logger.Debug(Environment.NewLine + Environment.NewLine + result + Environment.NewLine + Environment.NewLine);
+                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     NLog.Logger logger = NLog.LogManager.GetLogger("myLogger");
 
                     Console.WriteLine("Error happened");
                     Console.WriteLine(ex.Message);
                     logger.Error(ex.Message);
-                    
+
                     Exception innerException = ex.InnerException;
 
                     while (innerException != null)
@@ -174,12 +181,16 @@ namespace AirTicketSearcher.Kiwi
 
                             tr.AddCell("Personal weight: " + data.baggage?.personal_item?.weight.ToString());
                             tr.AddCell("Personal price: " + data.baggage?.personal_item?.price.ToString());
-                            tr.AddCell("Hand weight: " + data.baggage.hand.weight.ToString());
-                            tr.AddCell("Hand price: " + data.baggage.hand.price.ToString());
-                            foreach(Hold hold in data.baggage.hold)
+                            tr.AddCell("Hand weight: " + data.baggage?.hand?.weight.ToString());
+                            tr.AddCell("Hand price: " + data.baggage?.hand?.price.ToString());
+
+                            if (data?.baggage?.hold != null)
                             {
-                                tr.AddCell("Hold weight: " + hold.weight);
-                                tr.AddCell("Hold price: " + hold.price);
+                                foreach (Hold hold in data?.baggage?.hold)
+                                {
+                                    tr.AddCell("Hold weight: " + hold?.weight);
+                                    tr.AddCell("Hold price: " + hold?.price);
+                                }
                             }
                         }
 
@@ -188,15 +199,15 @@ namespace AirTicketSearcher.Kiwi
                             tr.AddCell("Routes","","","4");
                         }
 
-                        foreach(Route route in data.route)
+                        foreach(Route route in data?.route)
                         {
                             using(var tr = table.AddRow())
                             {
 
-                                tr.AddCell("Route Price: " + route.price.ToString());
+                                tr.AddCell("Route Price: " + route?.price.ToString());
                                 tr.AddCell(respond.currency);
-                                tr.AddCell("Route from: " + route.cityFrom + " - " + route.flyFrom);
-                                tr.AddCell("Route to: " + route.cityTo + " - " + route.flyTo);
+                                tr.AddCell("Route from: " + route?.cityFrom + " - " + route?.flyFrom);
+                                tr.AddCell("Route to: " + route?.cityTo + " - " + route?.flyTo);
                                 DateTime time = DateTime.UnixEpoch.AddSeconds(route.dTime);
                                 tr.AddCell("Departure time: " + time.ToString());
                                 //time = DateTime.UnixEpoch.AddSeconds(route.dTimeUTC);

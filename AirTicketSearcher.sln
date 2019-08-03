@@ -3,12 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirTicketSearcher", "AirTicketSearcher\AirTicketSearcher.csproj", "{01FFDF87-4000-4CC1-A286-2C396203EDC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirTicketSearcher", "AirTicketSearcher\AirTicketSearcher.csproj", "{01FFDF87-4000-4CC1-A286-2C396203EDC2}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -30,5 +27,11 @@ Global
 		{01FFDF87-4000-4CC1-A286-2C396203EDC2}.Release|x64.Build.0 = Release|Any CPU
 		{01FFDF87-4000-4CC1-A286-2C396203EDC2}.Release|x86.ActiveCfg = Release|Any CPU
 		{01FFDF87-4000-4CC1-A286-2C396203EDC2}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8B16294-A2A9-4973-BEC0-05F4E8B6AC61}
 	EndGlobalSection
 EndGlobal
