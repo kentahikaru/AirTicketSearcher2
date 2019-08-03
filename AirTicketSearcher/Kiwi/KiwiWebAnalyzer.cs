@@ -89,7 +89,7 @@ namespace AirTicketSearcher.Kiwi
                     kiwiWebData.departureTime = toDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
                     kiwiWebData.returnTime = fromDestination.SelectSingleNode(".//div[@class='TripInfoField-time']").InnerText;
 
-                    kiwiWebData.bookingLink = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
+                    kiwiWebData.bookingLink = "https://www.kiwi.com" + node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a").GetAttributeValue("href", "notfound"); //Attributes["href"].Value;
                                                                                                                                                           //HtmlNode nonode = node.SelectSingleNode(".//div[@class='JourneyBookingButtonLink']/a");
                                                                                                                                                           //JourneyButtons
 

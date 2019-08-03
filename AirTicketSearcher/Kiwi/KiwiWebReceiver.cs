@@ -107,6 +107,7 @@ namespace AirTicketSearcher.Kiwi
                 ExecutablePath = this.config.chromePath,
                 //Args = new string[] { "--incognito" },
                 //Args = new string[] { "--disable-infobars", "--user-data-dir=/home/pi/.config/chromium" },
+                Args = new string[] { "--ignore-certificate-errors" },
             }))
             {
                 using (var page = await browser.NewPageAsync())
