@@ -59,6 +59,11 @@ namespace AirTicketSearcher.Configuration
             config.pelikanConfig.destinations = pelikanSection["destinations"];
             config.pelikanConfig.emailSubject = pelikanSection["email_subject"];
 
+            //----------------------- Skyscanner section -----------------------//
+            var skyscannerSection = ConfigurationManager.GetSection("skyscannerParameters") as NameValueCollection;
+            config.skyscannerConfig.origin = skyscannerSection["origin"];
+            config.skyscannerConfig.destinations = skyscannerSection["destinations"];
+            config.skyscannerConfig.emailSubject = skyscannerSection["email_subject"];
 
 
             //----------------------- Email section -----------------------//

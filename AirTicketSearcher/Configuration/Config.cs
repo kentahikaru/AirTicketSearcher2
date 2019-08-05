@@ -13,5 +13,6 @@ namespace AirTicketSearcher.Configuration
         public KiwiConfig kiwiConfig = new KiwiConfig();
         public KiwiWebConfig kiwiWebConfig = new KiwiWebConfig();
         public PelikanConfig pelikanConfig = new PelikanConfig();
+        public SkyscannerConfig skyscannerConfig = new SkyscannerConfig();
     }
 }

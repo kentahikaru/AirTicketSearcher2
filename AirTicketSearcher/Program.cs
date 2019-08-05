@@ -78,6 +78,7 @@ namespace AirTicketSearcher
             //searcherList.Add(new Kiwi.Kiwi(config));
             searcherList.Add(new Kiwi.KiwiWeb(config));
             searcherList.Add(new Pelikan.Pelikan(config));
+            // searcherList.Add(new Skyscanner.Skyscanner(config));
 
             return searcherList;
         }

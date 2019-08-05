@@ -105,9 +105,10 @@
                 using (var page = await browser.NewPageAsync())
                 {
                     page.DefaultTimeout = 30000;
-                    await page.GoToAsync(url, WaitUntilNavigation.Load);
                     try
                     {
+                        await page.GoToAsync(url, WaitUntilNavigation.Load);
+
                         //ElementHandle element;
                         //do
                         //{

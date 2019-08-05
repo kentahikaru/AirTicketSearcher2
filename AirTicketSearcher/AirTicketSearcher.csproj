@@ -5,6 +5,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AsyncAwaitBestPractices" Version="3.0.0" />
     <PackageReference Include="DotnetSpider" Version="4.0.4" />
     <PackageReference Include="htmlagilitypack" Version="1.11.8" />
     <PackageReference Include="NLog" Version="5.0.0-beta11" />
